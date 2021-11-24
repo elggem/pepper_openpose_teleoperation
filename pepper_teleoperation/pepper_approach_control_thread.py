@@ -38,7 +38,7 @@ class PepperApproachControl(Thread):
         self.queue_in = queue_in
         self.queue_out = queue_out
         
-        self.sock_send = SocketSendSignal()
+        # self.sock_send = SocketSendSignal()
   
         # Call the Thread class's init function
         Thread.__init__(self)
@@ -385,13 +385,13 @@ class PepperApproachControl(Thread):
                  "HipPitch"]
         
         # Speed limits for the joints
-        fractionMaxSpeed = 0.15
+        fractionMaxSpeed = 0.5
 
         print("Start controlling Pepper joints!")
         self.queue_out.put("Start controlling Pepper joints!")
         
         ## SEND SIGNAL TO SAVE KEYPOINTS WITH TIMESTAMPS
-        self.sock_send.send('Start')
+        # self.sock_send.send('Start')
         
         # show plots of the joints angles
         if self.show_plot:
@@ -481,7 +481,7 @@ class PepperApproachControl(Thread):
                 ### Pepper joints control ###
                 # Control angles list 
                 angles = [float(self.LShoulderPitch), float(self.LShoulderRoll), float(self.LElbowYaw), float(self.LElbowRoll), \
-                          float(self.RShoulderPitch), float(self.RShoulderRoll), float(self.RElbowYaw), float(self.RElbowRoll), float(self.HipPitch)]
+                          float(self.RShoulderPitch), float(self.RShoulderRoll), float(self.RElbowYaw), float(self.RElbowRoll), float(0)]
 
                 ## Send control commands to the robot if 2 seconds have passed (Butterworth Filter initialization time) ##
                 if self.time_elapsed > 2.0:
@@ -533,7 +533,7 @@ class PepperApproachControl(Thread):
             
          
         # signal to Openpose to stop saving keypoints
-        self.sock_send.send('Stop')
+        # self.sock_send.send('Stop')
                
         # show plots of the joints angles
         if self.show_plot:
@@ -558,7 +558,7 @@ class PepperApproachControl(Thread):
                 write = csv.writer(f) 
                 write.writerow(timestamp_arr_end) 
             
-            self.sock_send.close()
+            # self.sock_send.close()
             # print("PepperApproachControl thread terminated correctly")
             
 # Main 

@@ -20,7 +20,7 @@ darkest_red = '#52373b'
 light_red = '#eb9ea0'
 orange = '#ec5633'
 
-pyglet.font.add_file('GUI_material\Roboto-Medium.ttf')
+# pyglet.font.add_file('GUI_material\Roboto-Medium.ttf')
 
 class PepperGui:
     def __init__(self, master, session):
@@ -239,7 +239,7 @@ class PepperGui:
                                 disabledbackground=darkest_red,
                                 width=13,
                                 relief=tk.FLAT)
-        self.text_ip.insert(tk.END, "130.251.13.147")
+        self.text_ip.insert(tk.END, "192.168.0.141")
         self.text_ip.place(x=476, y=390)
         
         self.lbl_ip = tk.Label(self.master,
