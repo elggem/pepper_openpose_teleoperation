@@ -421,6 +421,7 @@ class PepperApproachControl(Thread):
                 self.LShoulderPitch, self.LShoulderRoll, self.LElbowYaw, self.LElbowRoll,\
                 self.RShoulderPitch, self.RShoulderRoll, self.RElbowYaw, self.RElbowRoll,\
                 self.HipPitch = KtA.get_angles(wp_dict)
+
                 
                 # Update time elapsed and timestamp
                 t = time.time()
@@ -486,10 +487,13 @@ class PepperApproachControl(Thread):
                 ## Send control commands to the robot if 2 seconds have passed (Butterworth Filter initialization time) ##
                 if self.time_elapsed > 2.0:
                     motion_service.setAngles(names, angles, fractionMaxSpeed)
-                
-                # Mantain right wrist horizontal w. r. t. ground
-                motion_service.setAngles(["RWristYaw"], [-1.3], 0.15) 
-                
+                    
+                    LWristYaw = KtA.obtain_LWrist_angle(wp_dict['9'], wp_dict['10'], wp_dict['11'])
+                    RWristYaw = - KtA.obtain_LWrist_angle(wp_dict['12'], wp_dict['13'], wp_dict['14'])
+                    motion_service.setAngles(["LWristYaw"], [float(LWristYaw)], 1.0) 
+                    motion_service.setAngles(["RWristYaw"], [float(RWristYaw)], 1.0) 
+
+               
                 # Store robot angles lists for plots
                 if self.show_plot:
                     LSP_arr_robot.append(memProxy.getData("Device/SubDeviceList/LShoulderPitch/Position/Sensor/Value"))
